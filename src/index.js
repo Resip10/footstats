@@ -1,8 +1,26 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
+import createMuiTheme from '@material-ui/core/styles/createMuiTheme';
+
 import './index.scss';
 import App from './components/app/App';
 import registerServiceWorker from './services/registerServiceWorker';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+const mainTheme = createMuiTheme({
+  palette: {
+    type: 'dark',
+    primary: {
+      main: '#4a148c'
+    }
+  },
+});
+
+const FootstatsApp = () => (
+    <MuiThemeProvider theme={mainTheme}>
+        <App />
+    </MuiThemeProvider>
+);
+
+ReactDOM.render(<FootstatsApp />, document.getElementById('root'));
 registerServiceWorker();
