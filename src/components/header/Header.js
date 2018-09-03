@@ -6,8 +6,13 @@ import Typography from '@material-ui/core/Typography';
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
-import ExpansionPanelActions from '@material-ui/core/ExpansionPanelActions';
+//import ExpansionPanelActions from '@material-ui/core/ExpansionPanelActions';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
+import InboxIcon from '@material-ui/icons/MoveToInbox';
 import Avatar from '@material-ui/core/Avatar';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
@@ -23,7 +28,6 @@ const drawerWidth = 240;
 
 const styles = theme => ({
   root: {
-    height: 500,
     flexGrow: 1,
     zIndex: 1,
     overflow: 'hidden',
@@ -75,7 +79,7 @@ const styles = theme => ({
   toolbar: {
     display: 'flex',
     alignItems: 'center',
-    justifyContent: 'flex-end',
+    justifyContent: 'center',
     padding: '0 8px',
     ...theme.mixins.toolbar,
   },
@@ -87,17 +91,16 @@ const styles = theme => ({
 });
 
 class Header extends Component {
-  constructor(props) {
-    super(props);
-  }
   state = {
     menuOpen: false
   };
+
   handleMenuOpen = () => {
     this.setState({
       menuOpen: !this.state.menuOpen
     });
   };
+
   render() {
     const { classes, theme } = this.props;
 
@@ -105,7 +108,7 @@ class Header extends Component {
       <div className={classes.root}>
         <AppBar title="Footstats" position="absolute"
                 className={classNames(classes.appBar, this.state.menuOpen && classes.appBarShift)}>
-          <Toolbar>
+          <Toolbar className="major-toolbar">
             <IconButton
               color="inherit"
               aria-label="Open menu"
@@ -147,16 +150,28 @@ class Header extends Component {
         <Drawer
           variant="permanent"
           classes={{
-            paper: classNames(classes.drawerPaper, !this.state.open && classes.drawerPaperClose),
+            paper: classNames(classes.drawerPaper, !this.state.menuOpen && classes.drawerPaperClose),
           }}
-          open={this.state.open}
+          open={this.state.menuOpen}
         >
           <div className={classes.toolbar}>
             <Typography variant="title">
               Menu
             </Typography>
           </div>
+          <List>
+            <ListItem button>
+              <ListItemIcon>
+                <InboxIcon />
+              </ListItemIcon>
+              <ListItemText primary="Inbox" />
+            </ListItem>
+          </List>
         </Drawer>
+        <main className={classes.content}>
+          <div className={classes.toolbar} />
+          <Typography noWrap>{'Main content'}</Typography>
+        </main>
       </div>
     );
   }
