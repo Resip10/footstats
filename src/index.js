@@ -1,10 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { createStore } from "redux";
+import { connect, Provider } from "react-redux";
+import { HashRouter, withRouter } from "react-router-dom";
+import rootReducer from "./redux";
 import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
 import createMuiTheme from '@material-ui/core/styles/createMuiTheme';
-
 import './index.scss';
-import App from './components/app/App';
+import App from './components/app/App.container';
 import registerServiceWorker from './services/registerServiceWorker';
 
 const mainTheme = createMuiTheme({
@@ -20,11 +23,15 @@ const mainTheme = createMuiTheme({
   },
 });
 
-const FootstatsApp = () => (
+const store = createStore(rootReducer);
+
+ReactDOM.render(
+  <Provider store={store}>
     <MuiThemeProvider theme={mainTheme}>
-        <App />
+      <App />
     </MuiThemeProvider>
+  </Provider>,
+  document.getElementById('root')
 );
 
-ReactDOM.render(<FootstatsApp />, document.getElementById('root'));
 registerServiceWorker();

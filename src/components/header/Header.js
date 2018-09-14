@@ -6,7 +6,6 @@ import Typography from '@material-ui/core/Typography';
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
-//import ExpansionPanelActions from '@material-ui/core/ExpansionPanelActions';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Avatar from '@material-ui/core/Avatar';
 import Grid from '@material-ui/core/Grid';
@@ -45,17 +44,21 @@ const styles = theme => ({
 });
 
 class Header extends Component {
+  handleMenuOpen = () => {
+    this.props.openMenu(!this.props.isMenuOpen);
+  };
+
   render() {
-    const { classes, theme, menuOpen, handleMenuOpen } = this.props;
+    const { classes, theme } = this.props;
 
     return (
       <AppBar title="Footstats" position="absolute"
-              className={classNames(classes.appBar, menuOpen && classes.appBarShift)}>
+              className={classNames(classes.appBar, this.props.isMenuOpen && classes.appBarShift)}>
         <Toolbar className="major-toolbar">
           <IconButton
             color="inherit"
             aria-label="Open menu"
-            onClick={handleMenuOpen}
+            onClick={this.handleMenuOpen}
             className={classes.menuButton}
           >
             <MenuIcon />
@@ -94,10 +97,9 @@ class Header extends Component {
 }
 
 Header.propTypes = {
+  isMenuOpen: PropTypes.bool.isRequired,
   classes: PropTypes.object.isRequired,
-  theme: PropTypes.object.isRequired,
-  menuOpen: PropTypes.bool.isRequired,
-  handleMenuOpen: PropTypes.func.isRequired
+  theme: PropTypes.object.isRequired
 };
 
 export default withStyles(styles, { withTheme: true })(Header);

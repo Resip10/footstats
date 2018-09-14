@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Header from '../header/Header';
+import Header from '../header/Header.container';
 import classNames from 'classnames';
 import Typography from "@material-ui/core/Typography/Typography";
 import { withStyles } from '@material-ui/core/styles';
@@ -57,14 +57,18 @@ const styles = theme => ({
 });
 
 class App extends Component {
-  state = {
-    menuOpen: false
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      isMenuOpen: props.mainStates.isMenuOpen
+    };
+  }
+  componentWillReceiveProps (newProps) {
+    console.log('here');
+  }
 
-  handleMenuOpen = () => {
-    this.setState({
-      menuOpen: !this.state.menuOpen
-    });
+  asdasdasd = () => {
+    console.log(this.props.mainStates.isMenuOpen);
   };
 
   render() {
@@ -72,13 +76,13 @@ class App extends Component {
 
     return (
       <div className={classes.root}>
-        <Header handleMenuOpen={this.handleMenuOpen} menuOpen={this.state.menuOpen} />
+        <Header isMenuOpen={this.state.isMenuOpen} />
         <Drawer
           variant="permanent"
           classes={{
-            paper: classNames(classes.drawerPaper, !this.state.menuOpen && classes.drawerPaperClose),
+            paper: classNames(classes.drawerPaper, !this.state.isMenuOpen && classes.drawerPaperClose),
           }}
-          open={this.state.menuOpen}
+          open={this.state.isMenuOpen}
         >
           <div className={classes.toolbar}>
             <Typography variant="title">
@@ -86,7 +90,7 @@ class App extends Component {
             </Typography>
           </div>
           <List>
-            <ListItem button>
+            <ListItem button onClick={this.asdasdasd}>
               <ListItemIcon>
                 <InboxIcon />
               </ListItemIcon>
@@ -104,8 +108,9 @@ class App extends Component {
 }
 
 App.propTypes = {
+  mainStates: PropTypes.object.isRequired,
   classes: PropTypes.object.isRequired,
-  theme: PropTypes.object.isRequired,
+  theme: PropTypes.object.isRequired
 };
 
 export default withStyles(styles, { withTheme: true })(App);
