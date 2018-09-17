@@ -1,9 +1,37 @@
 import { connect } from "react-redux";
-import Header from "./Header";
+import compose from 'recompose/compose';
+import { withStyles } from '@material-ui/core/styles';
 import { openSideMenu } from "../../redux/mainStates";
+import Header from "./Header";
 
-const mapStateToProps = (state, {isMenuOpen}) => ({
-  isMenuOpen
+const drawerWidth = 240;
+const styles = theme => ({
+  appBar: {
+    zIndex: theme.zIndex.drawer + 1,
+    transition: theme.transitions.create(['width', 'margin'], {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.leavingScreen,
+    }),
+  },
+  appBarShift: {
+    marginLeft: drawerWidth,
+    width: `calc(100% - ${drawerWidth}px)`,
+    transition: theme.transitions.create(['width', 'margin'], {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.enteringScreen,
+    }),
+  },
+  menuButton: {
+    marginLeft: 12,
+    marginRight: 36,
+  },
+  hide: {
+    display: 'none',
+  }
+});
+
+const mapStateToProps = (state) => ({
+  isMenuOpen: state.mainStates.isMenuOpen
 });
 
 const mapDispatchToProps = dispatch => {
@@ -14,7 +42,10 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
+export default compose(
+  withStyles(styles, { withTheme: true }),
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )
 )(Header);

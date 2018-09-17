@@ -20,8 +20,9 @@ const initialState = {
 export default (state = initialState, action) => {
   switch (action.type) {
     case SIDE_MENU_OPEN:
-      state.isMenuOpen = action.isMenuOpen;
-      return state;
+      return {
+        isMenuOpen: action.isMenuOpen
+      };
 
     case DEFAULT_SIDE_MENU_OPEN:
       return state;
