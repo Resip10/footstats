@@ -26,6 +26,8 @@ const mainTheme = createMuiTheme({
 
 const store = createStore(rootReducer);
 
+console.log(store.getState().mainStates.isMenuOpen);
+
 ReactDOM.render(
   <Provider store={store}>
     <MuiThemeProvider theme={mainTheme}>

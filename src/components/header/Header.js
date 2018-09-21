@@ -3,14 +3,11 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import PropTypes from 'prop-types';
 import Typography from '@material-ui/core/Typography';
-import ExpansionPanel from '@material-ui/core/ExpansionPanel';
-import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
-import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Avatar from '@material-ui/core/Avatar';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
+import Fade from '@material-ui/core/Fade';
 import classNames from 'classnames';
 import APL_AVATAR from '../../images/apl_avatar.png'
 
@@ -37,8 +34,7 @@ class Header extends Component {
           >
             <MenuIcon />
           </IconButton>
-          <ExpansionPanel className="header-expanded">
-            <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+          <Fade in={!this.props.isMenuOpen}>
               <Grid container
                     direction="row"
                     spacing={Number(16)}
@@ -56,15 +52,7 @@ class Header extends Component {
                   </Typography>
                 </Grid>
               </Grid>
-            </ExpansionPanelSummary>
-            <ExpansionPanelDetails >
-              <div>
-                <Typography variant="caption">
-                  Expanded
-                </Typography>
-              </div>
-            </ExpansionPanelDetails>
-          </ExpansionPanel>
+          </Fade>
         </Toolbar>
       </AppBar>);
   }

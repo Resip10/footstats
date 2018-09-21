@@ -35,6 +35,11 @@ const styles = theme => ({
     justifyContent: 'center',
     padding: '0 8px',
     ...theme.mixins.toolbar
+  },
+  expansionHeader: {
+    width: '100%',
+    backgroundColor: 'transparent',
+    boxShadow: 'none',
   }
 });
 
