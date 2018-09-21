@@ -11,6 +11,7 @@ import App from './components/app/App.container';
 import registerServiceWorker from './services/registerServiceWorker';
 
 const mainTheme = createMuiTheme({
+  drawerWidth: 240,
   palette: {
     type: 'dark',
     primary: {

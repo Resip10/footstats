@@ -1,24 +1,26 @@
 import { connect } from "react-redux";
 import compose from 'recompose/compose';
 import { withStyles } from '@material-ui/core/styles';
-import App from "./App";
+import Main from "./Main";
 
 const styles = theme => ({
-  root: {
+  content: {
     flexGrow: 1,
-    zIndex: 1,
-    overflow: 'hidden',
-    position: 'relative',
+    backgroundColor: theme.palette.background.default,
+    padding: theme.spacing.unit * 3,
+  },
+  toolbar: {
     display: 'flex',
-    height: '100vh'
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: '0 8px',
+    ...theme.mixins.toolbar
   }
 });
 
-const mapStateToProps = (state) => ({
-  isMenuOpen: state.mainStates.isMenuOpen
-});
+const mapStateToProps = (state) => ({});
 
 export default compose(
   withStyles(styles, { withTheme: true }),
   connect(mapStateToProps)
-)(App);
+)(Main);

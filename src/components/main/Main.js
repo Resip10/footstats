@@ -1,13 +1,9 @@
 import React, { Component } from 'react';
 import classNames from 'classnames';
 import Typography from "@material-ui/core/Typography/Typography";
-import './App.scss';
 import PropTypes from "prop-types";
-import Header from '../header/Header.container';
-import Sidebar from '../sidebar/Sidebar.container';
-import Main from '../main/Main.container';
 
-class App extends Component {
+class Main extends Component {
   constructor(props) {
     super(props);
   }
@@ -16,19 +12,17 @@ class App extends Component {
     const { classes, theme } = this.props;
 
     return (
-      <div className={classes.root}>
-        <Header />
-        <Sidebar />
-        <Main />
-      </div>
+      <main className={classes.content}>
+        <div className={classes.toolbar} />
+        <Typography noWrap>{'Main content'}</Typography>
+      </main>
     );
   }
 }
 
-App.propTypes = {
-  isMenuOpen: PropTypes.bool.isRequired,
+Main.propTypes = {
   classes: PropTypes.object.isRequired,
   theme: PropTypes.object.isRequired
 };
 
-export default App;
+export default Main;

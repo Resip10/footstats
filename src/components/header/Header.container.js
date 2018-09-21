@@ -4,7 +4,6 @@ import { withStyles } from '@material-ui/core/styles';
 import { openSideMenu } from "../../redux/mainStates";
 import Header from "./Header";
 
-const drawerWidth = 240;
 const styles = theme => ({
   appBar: {
     zIndex: theme.zIndex.drawer + 1,
@@ -14,8 +13,8 @@ const styles = theme => ({
     }),
   },
   appBarShift: {
-    marginLeft: drawerWidth,
-    width: `calc(100% - ${drawerWidth}px)`,
+    marginLeft: theme.drawerWidth,
+    width: `calc(100% - ${theme.drawerWidth}px)`,
     transition: theme.transitions.create(['width', 'margin'], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen,
