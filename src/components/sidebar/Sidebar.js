@@ -3,7 +3,8 @@ import classNames from 'classnames';
 import Typography from "@material-ui/core/Typography/Typography";
 import PropTypes from "prop-types";
 import Drawer from '@material-ui/core/Drawer';
-import HomeIcon from '@material-ui/icons/Home';
+import HomeRoundedIcon from '@material-ui/icons/HomeRounded';
+import InsertChartIcon from '@material-ui/icons/InsertChartRounded';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
@@ -16,6 +17,9 @@ import Grid from "@material-ui/core/Grid/Grid";
 import Avatar from "@material-ui/core/Avatar/Avatar";
 import APL_AVATAR from "../../images/apl_avatar.png";
 import Fade from '@material-ui/core/Fade';
+import { Link } from "react-router-dom";
+import { ROUTES } from "../../redux/routeStates";
+
 class Sidebar extends Component {
   constructor(props) {
     super(props);
@@ -36,6 +40,10 @@ class Sidebar extends Component {
     this.setState({
       expanded: expanded
     });
+  };
+
+  redirectHandler = (pathName) => () => {
+    return this.props.setRoute(pathName);
   };
 
   render() {
@@ -83,12 +91,22 @@ class Sidebar extends Component {
           </Fade>
         </div>
         <List>
-          <ListItem button >
-            <ListItemIcon>
-              <HomeIcon />
-            </ListItemIcon>
-            <ListItemText primary="Home" />
-          </ListItem>
+          <Link to={'/'}>
+            <ListItem button selected={this.props.appRoute === ROUTES.HOME}>
+              <ListItemIcon>
+                <HomeRoundedIcon />
+              </ListItemIcon>
+              <ListItemText primary="Home" />
+            </ListItem>
+          </Link>
+          <Link to={ROUTES.STATS}>
+            <ListItem button selected={this.props.appRoute === ROUTES.STATS}>
+              <ListItemIcon>
+                <InsertChartIcon />
+              </ListItemIcon>
+              <ListItemText primary="League statistics" />
+            </ListItem>
+          </Link>
         </List>
       </Drawer>
     );
@@ -96,6 +114,7 @@ class Sidebar extends Component {
 }
 
 Sidebar.propTypes = {
+  appRoute: PropTypes.string.isRequired,
   isMenuOpen: PropTypes.bool.isRequired,
   classes: PropTypes.object.isRequired,
   theme: PropTypes.object.isRequired

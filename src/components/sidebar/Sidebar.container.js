@@ -44,8 +44,11 @@ const styles = theme => ({
 });
 
 const mapStateToProps = (state) => ({
-  isMenuOpen: state.mainStates.isMenuOpen
+  isMenuOpen: state.mainStates.isMenuOpen,
+  appRoute: state.routeStates.name
 });
+
+const mapDispatchToProps = dispatch => {};
 
 export default compose(
   withStyles(styles, { withTheme: true }),
