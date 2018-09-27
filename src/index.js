@@ -10,6 +10,8 @@ import './index.scss';
 import App from './components/app/App.container';
 import registerServiceWorker from './services/registerServiceWorker';
 
+import { Competition } from './services/apiService';
+
 const mainTheme = createMuiTheme({
   drawerWidth: 240,
   palette: {
@@ -23,6 +25,16 @@ const mainTheme = createMuiTheme({
     }
   },
 });
+
+/*let competition = new Competition();
+competition.info()
+  .then((info) => {
+    console.log(info);
+  })
+  .catch((error) => {
+    console.log(error);
+  })
+;*/
 
 const store = createStore(rootReducer);
 

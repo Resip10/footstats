@@ -90,21 +90,37 @@ class Sidebar extends Component {
             </ExpansionPanel>
           </Fade>
         </div>
-        <List>
-          <Link to={'/'}>
-            <ListItem button selected={this.props.appRoute === ROUTES.HOME}>
+        <List component='nav'>
+          <Link
+            to={'/'}
+            replace={this.props.appRoute === ROUTES.HOME}
+            style={{'textDecoration': 'none'}}
+          >
+            <ListItem
+              button
+              dense
+              className={classNames(this.props.appRoute === ROUTES.HOME && classes.selected)}
+            >
               <ListItemIcon>
                 <HomeRoundedIcon />
               </ListItemIcon>
               <ListItemText primary="Home" />
             </ListItem>
           </Link>
-          <Link to={ROUTES.STATS}>
-            <ListItem button selected={this.props.appRoute === ROUTES.STATS}>
+          <Link
+            to={ROUTES.STATS}
+            replace={this.props.appRoute === ROUTES.STATS}
+            style={{'textDecoration': 'none'}}
+          >
+            <ListItem
+              button
+              dense
+              className={classNames(this.props.appRoute === ROUTES.STATS && classes.selected)}
+            >
               <ListItemIcon>
                 <InsertChartIcon />
               </ListItemIcon>
-              <ListItemText primary="League statistics" />
+              <ListItemText primary='League statistics' />
             </ListItem>
           </Link>
         </List>

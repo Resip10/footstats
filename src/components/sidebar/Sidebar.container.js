@@ -40,6 +40,9 @@ const styles = theme => ({
     width: '100%',
     backgroundColor: 'transparent',
     boxShadow: 'none',
+  },
+  selected: {
+    backgroundColor: theme.palette.action.selected
   }
 });
 
