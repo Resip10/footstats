@@ -34,11 +34,11 @@ class Header extends Component {
           >
             <MenuIcon />
           </IconButton>
-          <Fade in={!this.props.isMenuOpen}>
               <Grid container
                     direction="row"
                     spacing={Number(16)}
                     alignItems="center">
+                <Fade in={!this.props.isMenuOpen}>
                 <Grid key={"headerAvatar"} item>
                   <Avatar
                     alt="APL"
@@ -46,13 +46,13 @@ class Header extends Component {
                     className={classNames(classes.avatar, classes.bigAvatar)}
                   />
                 </Grid>
+                </Fade>
                 <Grid key={"headerTitle"} item>
                   <Typography variant="title" color="inherit">
                     Footstats
                   </Typography>
                 </Grid>
               </Grid>
-          </Fade>
         </Toolbar>
       </AppBar>);
   }

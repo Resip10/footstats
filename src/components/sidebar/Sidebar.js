@@ -24,14 +24,16 @@ class Sidebar extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      expanded: false
+      expanded: false,
+      activeName: this._getActiveName()
     };
   }
 
   componentWillReceiveProps (newProps) {
     if (!newProps.isMenuOpen) {
       this.setState({
-        expanded: false
+        expanded: false,
+        activeName: this._getActiveName()
       });
     }
   }
@@ -44,6 +46,28 @@ class Sidebar extends Component {
 
   redirectHandler = (pathName) => () => {
     return this.props.setRoute(pathName);
+  };
+
+  _getActiveName = () => {
+    return this.props.activeTeam === -1
+      ? this.props.competitionInfo.name
+      : this.props.teams[this.props.activeTeam].name
+  };
+
+  _getSeasonDates = () => {
+    return `${this.props.competitionInfo.currentSeason.startDate.split('-')[0]} /
+    ${this.props.competitionInfo.currentSeason.endDate.split('-')[0]}`
+  };
+
+  _getNextMatchweek = () => {
+    let nextMatch;
+    if (this.props.activeTeam === -1) {
+      nextMatch = `Next matchweek: ${this.props.competitionInfo.currentSeason.currentMatchday}`;
+    } else {
+      nextMatch = `Next match: this.props.teams[this.props.activeTeam].name`;
+    }
+
+    return nextMatch;
   };
 
   render() {
@@ -74,18 +98,29 @@ class Sidebar extends Component {
                     />
                   </Grid>
                   <Grid item>
-                    <Typography>
-                      Footstats
+                    <Typography color="textPrimary">
+                      {this.state.activeName}
+                    </Typography>
+                    <Typography color="secondary">
+                      {this._getSeasonDates()}
                     </Typography>
                   </Grid>
                 </Grid>
               </ExpansionPanelSummary>
               <ExpansionPanelDetails >
-                <div>
-                  <Typography variant="caption">
-                    Expanded
-                  </Typography>
-                </div>
+                <Grid container
+                      wrap="nowrap"
+                      direction="column"
+                      spacing={Number(8)}
+                      alignItems="stretch">
+                  <Grid item>
+                  </Grid>
+                  <Grid item>
+                    <Typography variant="caption">
+                      {this._getNextMatchweek()}
+                    </Typography>
+                  </Grid>
+                </Grid>
               </ExpansionPanelDetails>
             </ExpansionPanel>
           </Fade>
@@ -120,7 +155,7 @@ class Sidebar extends Component {
               <ListItemIcon>
                 <InsertChartIcon />
               </ListItemIcon>
-              <ListItemText primary='League statistics' />
+              <ListItemText primary='Stats' />
             </ListItem>
           </Link>
         </List>
@@ -132,6 +167,10 @@ class Sidebar extends Component {
 Sidebar.propTypes = {
   appRoute: PropTypes.string.isRequired,
   isMenuOpen: PropTypes.bool.isRequired,
+  competitionInfo: PropTypes.object.isRequired,
+  standings: PropTypes.object.isRequired,
+  teams: PropTypes.object.isRequired,
+  activeTeam: PropTypes.number.isRequired,
   classes: PropTypes.object.isRequired,
   theme: PropTypes.object.isRequired
 };

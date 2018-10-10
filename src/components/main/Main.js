@@ -4,6 +4,7 @@ import { Switch, Route, Redirect } from "react-router-dom";
 import Typography from "@material-ui/core/Typography/Typography";
 import PropTypes from "prop-types";
 import { ROUTES } from "../../redux/routeStates";
+import Home from "../../scenes/home/Home.container";
 
 class Main extends Component {
   constructor(props) {
@@ -44,7 +45,9 @@ class Main extends Component {
   renderAuthorizedView = route => () => {
     if (!route) {
       this.state.nextRoute = ROUTES.HOME;
-      return <Typography noWrap>{'Home'}</Typography>;
+      return (
+        <Home />
+      );
     }
 
     switch (route) {
@@ -56,7 +59,7 @@ class Main extends Component {
       case ROUTES.HOME:
         this.state.nextRoute = ROUTES.HOME;
         return (
-          <Typography noWrap>{'Home'}</Typography>
+          <Home />
         );
 
       default:

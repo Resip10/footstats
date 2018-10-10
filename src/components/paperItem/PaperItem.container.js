@@ -2,28 +2,25 @@ import { connect } from "react-redux";
 import compose from 'recompose/compose';
 import { withStyles } from '@material-ui/core/styles';
 import { withRouter } from "react-router-dom";
-import App from "./App";
+import PaperItem from "./PaperItem";
 
 const styles = theme => ({
   root: {
-    flexGrow: 1,
-    zIndex: 1,
-    overflow: 'hidden',
-    position: 'relative',
-    display: 'flex',
-    minHeight: '100vh'
+    padding: '10px'
+  },
+  title: {
+    padding: '5px',
+    marginTop: '-20px',
+    borderRadius: '3px',
+    backgroundColor: theme.palette.secondary.main
   }
 });
 
 const mapStateToProps = (state) => ({
-  isMenuOpen: state.mainStates.isMenuOpen,
-  competitionInfo: state.competitionStates.info,
-  teams: state.competitionStates.teams,
-  standings: state.competitionStates.standings
 });
 
 export default compose(
   withStyles(styles, { withTheme: true }),
   withRouter,
   connect(mapStateToProps)
-)(App);
+)(PaperItem);

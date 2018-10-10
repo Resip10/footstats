@@ -48,7 +48,11 @@ const styles = theme => ({
 
 const mapStateToProps = (state) => ({
   isMenuOpen: state.mainStates.isMenuOpen,
-  appRoute: state.routeStates.name
+  appRoute: state.routeStates.name,
+  competitionInfo: state.competitionStates.info,
+  teams: state.competitionStates.teams,
+  standings: state.competitionStates.standings,
+  activeTeam: state.competitionStates.activeTeam
 });
 
 const mapDispatchToProps = dispatch => {};

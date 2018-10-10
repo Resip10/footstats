@@ -9,8 +9,9 @@ import createMuiTheme from '@material-ui/core/styles/createMuiTheme';
 import './index.scss';
 import App from './components/app/App.container';
 import registerServiceWorker from './services/registerServiceWorker';
-
 import { Competition } from './services/apiService';
+
+let competition = new Competition();
 
 const mainTheme = createMuiTheme({
   drawerWidth: 240,
@@ -26,27 +27,43 @@ const mainTheme = createMuiTheme({
   },
 });
 
-/*let competition = new Competition();
-competition.info()
-  .then((info) => {
-    console.log(info);
-  })
-  .catch((error) => {
-    console.log(error);
-  })
-;*/
+Promise.all([
+  competition.info(),
+  competition.teams(),
+  competition.standings(),
+]).then(reponseObject => {
+  let states = {
+    competitionStates: {
+      info: reponseObject[0],
+      teams: reponseObject[1],
+      standings: reponseObject[2],
+      matches: {},
+      activeTeam: -1
+    }
+  };
 
-const store = createStore(rootReducer);
+  Promise.all([
+    competition.matches(reponseObject[0].currentSeason.currentMatchday),
+    competition.matches(reponseObject[0].currentSeason.currentMatchday-1)
+  ]).then(matches => {
+    states.competitionStates.matches[reponseObject[0].currentSeason.currentMatchday] = matches[0];
 
-ReactDOM.render(
-  <Provider store={store}>
-    <MuiThemeProvider theme={mainTheme}>
-      <HashRouter key="router">
-        <App />
-      </HashRouter>
-    </MuiThemeProvider>
-  </Provider>,
-  document.getElementById('root')
-);
+    if (matches[1]) {
+      states.competitionStates.matches[reponseObject[0].currentSeason.currentMatchday-1] = matches[1];
+    }
+    const store = createStore(rootReducer, states);
+
+    ReactDOM.render(
+      <Provider store={store}>
+        <MuiThemeProvider theme={mainTheme}>
+          <HashRouter key="router">
+            <App />
+          </HashRouter>
+        </MuiThemeProvider>
+      </Provider>,
+      document.getElementById('root')
+    );
+  });
+});
 
 registerServiceWorker();

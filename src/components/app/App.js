@@ -10,6 +10,7 @@ import Main from '../main/Main.container';
 class App extends Component {
   constructor(props) {
     super(props);
+    console.log(props);
   }
 
   render() {
@@ -26,6 +27,7 @@ class App extends Component {
 }
 
 App.propTypes = {
+  competitionInfo: PropTypes.object.isRequired,
   isMenuOpen: PropTypes.bool.isRequired,
   classes: PropTypes.object.isRequired,
   theme: PropTypes.object.isRequired
