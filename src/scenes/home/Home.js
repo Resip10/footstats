@@ -12,14 +12,9 @@ import './home.scss';
 class Home extends Component {
   constructor(props) {
     super(props);
-
-    this.state = {
-      collapsing: false
-    };
   }
 
   render() {
-    this.state.collapsing = true;
     const { classes, theme } = this.props;
 
     return (
