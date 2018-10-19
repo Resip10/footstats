@@ -4,13 +4,7 @@ import { withStyles } from '@material-ui/core/styles';
 import { withRouter } from "react-router-dom";
 import MatchList from "./MatchList";
 
-const styles = theme => ({
-  rowGrid: {
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center'
-  }
-});
+const styles = theme => ({});
 
 const mapStateToProps = (state) => ({
   teams: state.competitionStates.teams.teams

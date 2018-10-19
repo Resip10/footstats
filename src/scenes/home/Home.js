@@ -13,10 +13,13 @@ class Home extends Component {
   constructor(props) {
     super(props);
 
-    console.log(props.matches);
+    this.state = {
+      collapsing: false
+    };
   }
 
   render() {
+    this.state.collapsing = true;
     const { classes, theme } = this.props;
 
     return (
@@ -27,7 +30,7 @@ class Home extends Component {
       >
         <Grid item xs>
           <PaperItem title='Table'>
-            <TableItem content={this._convertDataForTable()} />
+            <TableItem tableClassName='league-table' content={this._convertDataForTable()} />
           </PaperItem>
         </Grid>
         <Grid item xs>
@@ -36,7 +39,9 @@ class Home extends Component {
           </PaperItem>
         </Grid>
         <Grid item xs>
-          <PaperItem title='Next matchweek'/>
+          <PaperItem title='Next matchweek'>
+            <MatchList content={this.props.matches[this.props.nextTour]} />
+          </PaperItem>
         </Grid>
       </Grid>
     );

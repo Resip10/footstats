@@ -5,6 +5,22 @@ body {
 }
 
 .mini-team-logo {
-  height: 30px !important;
-  padding-right: 10px;
+  display: flex;
+  justify-content: center;
+  height: 30px;
+  width: 30px;
+  margin-right: 10px;
+
+  img {
+    height: 100%
+  }
+}
+
+
+.warning-text {
+  color: red !important;
+}
+
+.success-text {
+  color: #00ff39 !important;
 }

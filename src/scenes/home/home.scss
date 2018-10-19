@@ -3,3 +3,31 @@
   flex-direction: row;
   align-items: center;
 }
+
+.league-table {
+  tbody {
+    tr:nth-child(-n+4) {
+      td {
+        background-color: rgba(62, 232, 73, 0.27);
+      }
+    }
+
+    tr:nth-last-child(-n+3) {
+      td {
+        background-color: rgba(232, 86, 60, 0.27);
+      }
+    }
+
+    tr:nth-child(5) {
+      td {
+        background-color: rgba(30, 88, 189, 0.27);
+      }
+    }
+
+    tr:nth-child(1) {
+      td {
+        background-color: rgba(10, 232, 0, 0.4);
+      }
+    }
+  }
+}

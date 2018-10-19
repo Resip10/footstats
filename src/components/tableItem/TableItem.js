@@ -19,7 +19,7 @@ class TableItem extends Component {
     const { classes, theme } = this.props;
 
     return (
-      <Table padding='checkbox'>
+      <Table padding='checkbox' className={this.props.tableClassName || ''}>
         <TableHead>
           <TableRow>
             {
@@ -48,7 +48,17 @@ class TableItem extends Component {
                         <TableCell
                           key={`${row.position}_${key}`}
                         >
-                          {row[key]}
+                          {key === 'goalDifference'
+                            ? <Typography
+                                className={
+                                  row[key] < 0
+                                    ? 'warning-text'
+                                    : row[key] > 0
+                                    ? 'success-text' :
+                                    ''
+                                }
+                            >{row[key]}</Typography>
+                            : row[key]}
                         </TableCell>
                       );
                     })

@@ -3,14 +3,27 @@ import classNames from 'classnames';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
+import ListSubheader from '@material-ui/core/ListSubheader';
 import Grid from '@material-ui/core/Grid/Grid';
 
 import Typography from "@material-ui/core/Typography/Typography";
 import PropTypes from "prop-types";
 
+import './matchList.scss';
+
 class MatchList extends Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      matchesByDate: this._orderByDate([...props.content.matches])
+    }
+  }
+
+  componentWillReceiveProps(newProps) {
+    this.setState({
+      matchesByDate: this._orderByDate([...newProps.content.matches])
+    });
   }
 
   render() {
@@ -18,27 +31,29 @@ class MatchList extends Component {
 
     return (
       <List disablePadding>
-        {this.props.content.matches.map(match => {
-          return (
-            <ListItem key={match.id} dense disableGutters>
-              <Grid container direction='row'>
-                {/*<Grid item xs>
-                  <ListItemText primary={match.utcDate.split('T')[0]} />
-                </Grid>*/}
-                <Grid item xs className={classes.rowGrid}>
-                  <img src={this._getTeam(match.homeTeam.id).crestUrl} className='mini-team-logo'/>
-                  <ListItemText primary={match.homeTeam.name} />
+        {Object.keys(this.state.matchesByDate).map(date => {
+          return <div key={date}><ListSubheader component="div" className='match-list-date'>{date}</ListSubheader>
+          {this.state.matchesByDate[date].map(match => {
+            return (
+              <ListItem key={match.id} dense disableGutters>
+                <Grid container direction='row'>
+                  <Grid item xs className='match-list-field'>
+                    <div className='mini-team-logo'>
+                      <img src={this._getTeam(match.homeTeam.id).crestUrl} className='flex-item' />
+                    </div>
+                    <ListItemText primary={match.homeTeam.name} className='flex-item' />
+                  </Grid>
+                  <Grid item xs={2} className='flex-center match-list-field'>
+                    <ListItemText className='flex-item' primary={this._getScore(match.score)} />
+                  </Grid>
+                  <Grid item xs className='match-list-field'>
+                    <ListItemText primary={match.awayTeam.name} className='flex-item' />
+                    <img src={this._getTeam(match.awayTeam.id).crestUrl} className='mini-team-logo flex-item'/>
+                  </Grid>
                 </Grid>
-                <Grid item xs={2} className={classes.rowGrid}>
-                  <ListItemText primary={`${match.score.fullTime.homeTeam} - ${match.score.fullTime.awayTeam}`} />
-                </Grid>
-                <Grid item xs className={classes.rowGrid}>
-                  <ListItemText primary={match.awayTeam.name} />
-                  <img src={this._getTeam(match.awayTeam.id).crestUrl} className='mini-team-logo'/>
-                </Grid>
-              </Grid>
-            </ListItem>
-          );
+              </ListItem>
+            );
+          })}</div>;
         })}
       </List>
     );
@@ -53,6 +68,34 @@ class MatchList extends Component {
     });
 
     return lookingTeam;
+  };
+
+  _orderByDate = (matches) => {
+    let dateArray = {};
+
+    matches.forEach(match => {
+      let yyyyddmm = this._getdateFromUtc(match.utcDate);
+
+      if (dateArray[yyyyddmm]) {
+        dateArray[yyyyddmm].push(match);
+      } else {
+        dateArray[yyyyddmm] = [match];
+      }
+    });
+
+    return dateArray;
+  };
+
+  _getdateFromUtc = (utc) => {
+    let date = new Date(utc);
+    return `${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()}`;
+  };
+
+  _getScore = (scoreObject) => {
+    let homeScore = scoreObject.fullTime.homeTeam === null ? '-' : scoreObject.fullTime.homeTeam;
+    let awayScore = scoreObject.fullTime.awayTeam === null ? '-' : scoreObject.fullTime.awayTeam;
+
+    return `${homeScore} : ${awayScore}`;
   };
 }
 

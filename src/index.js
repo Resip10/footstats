@@ -11,6 +11,8 @@ import App from './components/app/App.container';
 import registerServiceWorker from './services/registerServiceWorker';
 import { Competition } from './services/apiService';
 
+import api_mock from './api_mock.json';
+
 let competition = new Competition();
 
 const mainTheme = createMuiTheme({
@@ -27,11 +29,12 @@ const mainTheme = createMuiTheme({
   },
 });
 
-Promise.all([
+/*Promise.all([
   competition.info(),
   competition.teams(),
   competition.standings(),
-]).then(reponseObject => {
+]).then(reponseObject => {*/
+  let reponseObject = api_mock;
   let states = {
     competitionStates: {
       info: reponseObject[0],
@@ -64,6 +67,6 @@ Promise.all([
       document.getElementById('root')
     );
   });
-});
+//});
 
 registerServiceWorker();
