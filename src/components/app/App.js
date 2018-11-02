@@ -8,16 +8,9 @@ import Sidebar from '../sidebar/Sidebar.container';
 import Main from '../main/Main.container';
 
 class App extends Component {
-  constructor(props) {
-    super(props);
-    console.log(props);
-  }
-
   render() {
-    const { classes, theme } = this.props;
-
     return (
-      <div className={classes.root}>
+      <div className='foot-app'>
         <Header />
         <Sidebar />
         <Main />

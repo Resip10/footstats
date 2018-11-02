@@ -4,16 +4,7 @@ import { withStyles } from '@material-ui/core/styles';
 import { withRouter } from "react-router-dom";
 import App from "./App";
 
-const styles = theme => ({
-  root: {
-    flexGrow: 1,
-    zIndex: 1,
-    overflow: 'hidden',
-    position: 'relative',
-    display: 'flex',
-    minHeight: '100vh'
-  }
-});
+const styles = theme => ({});
 
 const mapStateToProps = (state) => ({
   isMenuOpen: state.mainStates.isMenuOpen,

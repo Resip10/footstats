@@ -15,6 +15,12 @@ class Main extends Component {
     };
   }
 
+  componentDidMount() {
+    if (this.state.nextRoute !== this.props.appRoute) {
+      this.changeRoute(this.state.nextRoute);
+    }
+  }
+
   componentDidUpdate() {
     this.changeRoute(this.state.nextRoute);
   }
@@ -25,14 +31,10 @@ class Main extends Component {
     return (
       <main className={classes.content}>
         <div className={classes.toolbar} />
-
-          <Route
-            exact
-            path="/stats"
-            render={this.renderAuthorizedView(ROUTES.STATS)}
-          />
-          <Route exact path="/" render={this.renderAuthorizedView(ROUTES.HOME)} />
-          <Route exact path="/home" render={this.renderAuthorizedView(ROUTES.HOME)} />
+        <Route exact path="/stats" render={this.renderAuthorizedView(ROUTES.STATS)} />
+        <Route exact path="/" render={this.renderAuthorizedView(ROUTES.HOME)} />
+        <Route exact path="/home" render={this.renderAuthorizedView(ROUTES.HOME)} />
+        <Route exact path="/clubs" render={this.renderAuthorizedView(ROUTES.CLUBS)} />
       </main>
     );
   }
@@ -51,15 +53,20 @@ class Main extends Component {
     }
 
     switch (route) {
+      case ROUTES.HOME:
+        this.state.nextRoute = ROUTES.HOME;
+        return (
+          <Home />
+        );
       case ROUTES.STATS:
         this.state.nextRoute = ROUTES.STATS;
         return (
           <Typography noWrap>{'Statistics'}</Typography>
         );
-      case ROUTES.HOME:
-        this.state.nextRoute = ROUTES.HOME;
+      case ROUTES.CLUBS:
+        this.state.nextRoute = ROUTES.CLUBS;
         return (
-          <Home />
+          <Typography noWrap>{'Clubs list'}</Typography>
         );
 
       default:

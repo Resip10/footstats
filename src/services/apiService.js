@@ -1,7 +1,11 @@
 import axios from 'axios';
 
+// TODO: call in prod mode
 const PREFIX = 'https://api.football-data.org/v2';
 const TOKEN = '5eceb4be83b046ae93c483f30ce33dbe';
+
+//  api to server mock (postman)
+const FAKE_PREFIX = 'https://40c133a6-f5f1-4764-b81b-ed825f03edc1.mock.pstmn.io';
 
 class Competition {
   constructor() {
@@ -10,39 +14,15 @@ class Competition {
   }
 
   info() {
-    return new Promise((resolve, reject) => {
-      this._getRequest(`${PREFIX}/${this.pre}/${this.name}`)
-        .then(function (response) {
-          resolve(response.data);
-        })
-        .catch(function (error) {
-          reject(error);
-        })
-    });
+    return this._getRequest(`${FAKE_PREFIX}/${this.pre}/${this.name}`);
   }
 
   teams() {
-    return new Promise((resolve, reject) => {
-      this._getRequest(`${PREFIX}/${this.pre}/${this.name}/teams`)
-        .then(function (response) {
-          resolve(response.data);
-        })
-        .catch(function (error) {
-          reject(error);
-        })
-    });
+    return this._getRequest(`${FAKE_PREFIX}/${this.pre}/${this.name}/teams`);
   }
 
   standings() {
-    return new Promise((resolve, reject) => {
-      this._getRequest(`${PREFIX}/${this.pre}/${this.name}/standings`)
-        .then(function (response) {
-          resolve(response.data);
-        })
-        .catch(function (error) {
-          reject(error);
-        })
-    });
+    return this._getRequest(`${FAKE_PREFIX}/${this.pre}/${this.name}/standings`);
   }
 
   matches(matchday) {
@@ -51,7 +31,7 @@ class Competition {
         return resolve(null);
       }
 
-      this._getRequest(`${PREFIX}/${this.pre}/${this.name}/matches?matchday=${matchday}`)
+      this._getRequest(`${FAKE_PREFIX}/${this.pre}/${this.name}/matches?matchday=${matchday}`)
         .then(function (response) {
           resolve(response.data);
         })

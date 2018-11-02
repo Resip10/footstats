@@ -1,6 +1,7 @@
 export const ROUTES = {
   HOME: "home",
-  STATS: "stats"
+  STATS: "stats",
+  CLUBS: "clubs"
 };
 
 const ROUTE_SET = "ROUTE_SET";

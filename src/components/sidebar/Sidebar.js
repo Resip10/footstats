@@ -5,6 +5,7 @@ import PropTypes from "prop-types";
 import Drawer from '@material-ui/core/Drawer';
 import HomeRoundedIcon from '@material-ui/icons/HomeRounded';
 import InsertChartIcon from '@material-ui/icons/InsertChartRounded';
+import BallotRoundedIcon from '@material-ui/icons/BallotRounded';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
@@ -156,6 +157,22 @@ class Sidebar extends Component {
                 <InsertChartIcon />
               </ListItemIcon>
               <ListItemText primary='Stats' />
+            </ListItem>
+          </Link>
+          <Link
+            to={ROUTES.CLUBS}
+            replace={this.props.appRoute === ROUTES.CLUBS}
+            style={{'textDecoration': 'none'}}
+          >
+            <ListItem
+              button
+              dense
+              className={classNames(this.props.appRoute === ROUTES.CLUBS && classes.selected)}
+            >
+              <ListItemIcon>
+                <BallotRoundedIcon />
+              </ListItemIcon>
+              <ListItemText primary='Clubs' />
             </ListItem>
           </Link>
         </List>

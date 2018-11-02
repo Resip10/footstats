@@ -6,17 +6,12 @@ import PaperItem from "../../components/paperItem/PaperItem.container";
 import TableItem from "../../components/tableItem/TableItem.container";
 import MatchList from "../../components/matchList/MatchList.container";
 import PropTypes from "prop-types";
+import TeamIconMini from "../../components/pure/teamIconMini/TeamIconMini"
 
 import './home.scss';
 
 class Home extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
-    const { classes, theme } = this.props;
-
     return (
       <Grid
         container
@@ -50,7 +45,7 @@ class Home extends Component {
         goalDifference: row.goalDifference,
         playedGames: row.playedGames,
         points: row.points,
-        teamName: <div className='team-logo-name'><img src={row.team.crestUrl} className='mini-team-logo'/><Typography>{row.team.name}</Typography></div>,
+        teamName: <div className='team-logo-name'><TeamIconMini src={row.team.crestUrl} /><Typography>{row.team.name}</Typography></div>,
       }
     });
 

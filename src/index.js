@@ -29,31 +29,33 @@ const mainTheme = createMuiTheme({
   },
 });
 
-/*Promise.all([
+let states = {};
+
+Promise.all([
   competition.info(),
   competition.teams(),
   competition.standings(),
-]).then(reponseObject => {*/
-  let reponseObject = api_mock;
-  let states = {
+]).then(reponseObject => {
+  states = {
     competitionStates: {
-      info: reponseObject[0],
-      teams: reponseObject[1],
-      standings: reponseObject[2],
+      info: reponseObject[0].data,
+      teams: reponseObject[1].data,
+      standings: reponseObject[2].data,
       matches: {},
       activeTeam: -1
     }
   };
 
   Promise.all([
-    competition.matches(reponseObject[0].currentSeason.currentMatchday),
-    competition.matches(reponseObject[0].currentSeason.currentMatchday-1)
+    competition.matches(states.competitionStates.info.currentSeason.currentMatchday),
+    competition.matches(states.competitionStates.info.currentSeason.currentMatchday-1)
   ]).then(matches => {
-    states.competitionStates.matches[reponseObject[0].currentSeason.currentMatchday] = matches[0];
+    states.competitionStates.matches[states.competitionStates.info.currentSeason.currentMatchday] = matches[0];
 
     if (matches[1]) {
-      states.competitionStates.matches[reponseObject[0].currentSeason.currentMatchday-1] = matches[1];
+      states.competitionStates.matches[states.competitionStates.info.currentSeason.currentMatchday-1] = matches[1];
     }
+
     const store = createStore(rootReducer, states);
 
     ReactDOM.render(
@@ -67,6 +69,6 @@ const mainTheme = createMuiTheme({
       document.getElementById('root')
     );
   });
-//});
+});
 
 registerServiceWorker();
