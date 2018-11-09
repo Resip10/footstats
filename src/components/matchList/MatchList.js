@@ -31,7 +31,7 @@ class MatchList extends Component {
     const { classes, theme } = this.props;
 
     return (
-      <List disablePadding>
+      <List disablePadding className={'match-list'}>
         {Object.keys(this.state.matchesByDate).map(date => {
           return <div key={date}><ListSubheader component="div" className='match-list-date'>{date}</ListSubheader>
           {this.state.matchesByDate[date].map(match => {

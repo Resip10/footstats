@@ -1,18 +1,19 @@
-.match-list-date {
-}
+.match-list {
+  cursor: default;
 
-.match-list-field {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
+  .match-list-field {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
 
-  &.flex-center {
-    justify-content: center;
-  }
+    &.flex-center {
+      justify-content: center;
+    }
 
-  .flex-item {
-    padding: 0;
-    flex-grow: 0;
+    .flex-item {
+      padding: 0;
+      flex-grow: 0;
+    }
   }
 }

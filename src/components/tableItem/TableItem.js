@@ -9,6 +9,8 @@ import TableRow from '@material-ui/core/TableRow';
 import Typography from "@material-ui/core/Typography/Typography";
 import PropTypes from "prop-types";
 
+import './tableItem.scss';
+
 class TableItem extends Component {
   constructor(props) {
     super(props);
@@ -19,7 +21,7 @@ class TableItem extends Component {
     const { classes, theme } = this.props;
 
     return (
-      <Table padding='checkbox' className={this.props.tableClassName || ''}>
+      <Table padding='checkbox' className={`table-item ${this.props.tableClassName || ''}`}>
         <TableHead>
           <TableRow>
             {
