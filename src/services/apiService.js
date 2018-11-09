@@ -3,35 +3,36 @@ import axios from 'axios';
 // TODO: call in prod mode
 const PREFIX = 'https://api.football-data.org/v2';
 const TOKEN = '5eceb4be83b046ae93c483f30ce33dbe';
+const TOKEN_FREE_PREFIX = 'https://777score.com/api/v1';
+const SEASON = 9711;
+const COMPETITION_ID = 2;
 
-//  api to server mock (postman)
-const FAKE_PREFIX = 'https://40c133a6-f5f1-4764-b81b-ed825f03edc1.mock.pstmn.io';
-
-class Competition {
-  constructor() {
-    this.pre = 'competitions';
-    this.name = 'PL';
+class ApiService {
+  static info() {
+    return _getRequest({url: `${PREFIX}/competitions/PL`, isToken: true});
   }
 
-  info() {
-    return this._getRequest(`${FAKE_PREFIX}/${this.pre}/${this.name}`);
+  static teams() {
+    return _getRequest({url: `${PREFIX}/competitions/PL/teams`, isToken: true});
   }
 
-  teams() {
-    return this._getRequest(`${FAKE_PREFIX}/${this.pre}/${this.name}/teams`);
+  static additionTeams() {
+    return _getRequest({url: `${TOKEN_FREE_PREFIX}/tournaments/${COMPETITION_ID}/season/${SEASON}/teams`});
   }
 
-  standings() {
-    return this._getRequest(`${FAKE_PREFIX}/${this.pre}/${this.name}/standings`);
+  static standings() {
+    return _getRequest({url: `${PREFIX}/competitions/PL/standings`, isToken: true});
   }
 
-  matches(matchday) {
+  static matches(matchday) {
     return new Promise((resolve, reject) => {
-      if (matchday < 1) {
-        return resolve(null);
+      let url = `${PREFIX}/competitions/PL/matches`;
+
+      if (matchday) {
+        url += `?matchday=${matchday}`;
       }
 
-      this._getRequest(`${FAKE_PREFIX}/${this.pre}/${this.name}/matches?matchday=${matchday}`)
+      _getRequest({url, isToken: true})
         .then(function (response) {
           resolve(response.data);
         })
@@ -41,18 +42,22 @@ class Competition {
     });
   }
 
-  _getRequest(url) {
-    return axios({
-        method: 'get',
-        url: url,
-        dataType: 'json',
-        headers: { 'X-Auth-Token': TOKEN }
-      })
-    ;
+  static getLastResults() {
+    return _getRequest({url: `${TOKEN_FREE_PREFIX}/tournaments/${COMPETITION_ID}/season/${SEASON}/results`});
   }
 
+  static getFutureMatches() {
+    return _getRequest({url: `${TOKEN_FREE_PREFIX}/tournaments/${COMPETITION_ID}/season/${SEASON}/calendar`});
+  }
 }
 
-export {
-  Competition
+const _getRequest = ({url, isToken = false}) => {
+  return axios({
+    method: 'get',
+    url: url,
+    dataType: 'json',
+    headers: isToken ? { 'X-Auth-Token': TOKEN } : {}
+  });
 };
+
+export default ApiService;

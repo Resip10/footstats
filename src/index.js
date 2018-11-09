@@ -9,11 +9,8 @@ import createMuiTheme from '@material-ui/core/styles/createMuiTheme';
 import './index.scss';
 import App from './components/app/App.container';
 import registerServiceWorker from './services/registerServiceWorker';
-import { Competition } from './services/apiService';
-
-import api_mock from './api_mock.json';
-
-let competition = new Competition();
+import ApiService from './services/apiService';
+import DataParser from './services/dataParser';
 
 const mainTheme = createMuiTheme({
   drawerWidth: 240,
@@ -32,28 +29,39 @@ const mainTheme = createMuiTheme({
 let states = {};
 
 Promise.all([
-  competition.info(),
-  competition.teams(),
-  competition.standings(),
+  ApiService.info(),
+  ApiService.teams(),
+  ApiService.additionTeams(),
+  ApiService.standings(),
 ]).then(reponseObject => {
   states = {
     competitionStates: {
       info: reponseObject[0].data,
-      teams: reponseObject[1].data,
-      standings: reponseObject[2].data,
+      teams: DataParser.combineTeamsData({basicData: reponseObject[1].data, addData: reponseObject[2].data}),
+      standings: reponseObject[3].data,
       matches: {},
       activeTeam: -1
     }
   };
 
   Promise.all([
-    competition.matches(states.competitionStates.info.currentSeason.currentMatchday),
-    competition.matches(states.competitionStates.info.currentSeason.currentMatchday-1)
+    ApiService.matches(states.competitionStates.info.currentSeason.currentMatchday),
+    ApiService.getFutureMatches(),
+    ApiService.matches(states.competitionStates.info.currentSeason.currentMatchday-1),
+    ApiService.getLastResults()
   ]).then(matches => {
-    states.competitionStates.matches[states.competitionStates.info.currentSeason.currentMatchday] = matches[0];
+    states.competitionStates.matches[states.competitionStates.info.currentSeason.currentMatchday] = DataParser.combineFixtures({
+      basicData: matches[0],
+      addData: matches[1].data.matches,
+      teams: states.competitionStates.teams.teams
+    });
 
-    if (matches[1]) {
-      states.competitionStates.matches[states.competitionStates.info.currentSeason.currentMatchday-1] = matches[1];
+    if (matches[2]) {
+      states.competitionStates.matches[states.competitionStates.info.currentSeason.currentMatchday-1] = DataParser.combineFixtures({
+        basicData: matches[2],
+        addData: matches[3].data.matches,
+        teams: states.competitionStates.teams.teams
+      });
     }
 
     const store = createStore(rootReducer, states);
