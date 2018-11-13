@@ -6,6 +6,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import ListSubheader from '@material-ui/core/ListSubheader';
 import Grid from '@material-ui/core/Grid/Grid';
 import TeamIconMini from '../pure/teamIconMini/TeamIconMini';
+import CustomTooltip from '../pure/tooltip/CustomTooltip';
 
 import Typography from "@material-ui/core/Typography/Typography";
 import PropTypes from "prop-types";
@@ -27,30 +28,39 @@ class MatchList extends Component {
     });
   }
 
+  _convertComment(comment) {
+    if (!comment) {
+      return '';
+    }
+
+    return comment.replace(/\,/g, '\n');
+  }
+
   render() {
     const { classes, theme } = this.props;
-
     return (
       <List disablePadding className={'match-list'}>
         {Object.keys(this.state.matchesByDate).map(date => {
           return <div key={date}><ListSubheader component="div" className='match-list-date'>{date}</ListSubheader>
           {this.state.matchesByDate[date].map(match => {
             return (
-              <ListItem key={match.id} dense disableGutters>
-                <Grid container direction='row'>
-                  <Grid item xs className='match-list-field'>
-                    <TeamIconMini src={this._getTeam(match.homeTeam.id).crestUrl} class='flex-item'/>
-                    <ListItemText primary={match.homeTeam.name} className='flex-item' />
+              <CustomTooltip key={`${match.id}Tooltip`} toolText={this._convertComment(match.comment)}>
+                <ListItem key={match.id} dense disableGutters>
+                  <Grid container direction='row'>
+                    <Grid item xs className='match-list-field'>
+                      <TeamIconMini src={this._getTeam(match.homeTeam.id).crestUrl} class='flex-item'/>
+                      <ListItemText primary={match.homeTeam.name} className='flex-item' />
+                    </Grid>
+                    <Grid item xs={2} className='flex-center match-list-field'>
+                      <ListItemText className='flex-item' primary={this._getScore(match.score)} />
+                    </Grid>
+                    <Grid item xs className='match-list-field'>
+                      <ListItemText primary={match.awayTeam.name} className='flex-item' />
+                      <TeamIconMini src={this._getTeam(match.awayTeam.id).crestUrl} class='flex-item'/>
+                    </Grid>
                   </Grid>
-                  <Grid item xs={2} className='flex-center match-list-field'>
-                    <ListItemText className='flex-item' primary={this._getScore(match.score)} />
-                  </Grid>
-                  <Grid item xs className='match-list-field'>
-                    <ListItemText primary={match.awayTeam.name} className='flex-item' />
-                    <TeamIconMini src={this._getTeam(match.awayTeam.id).crestUrl} class='flex-item'/>
-                  </Grid>
-                </Grid>
-              </ListItem>
+                </ListItem>
+              </CustomTooltip>
             );
           })}</div>;
         })}

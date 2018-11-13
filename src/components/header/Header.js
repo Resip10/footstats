@@ -7,8 +7,8 @@ import Avatar from '@material-ui/core/Avatar';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
-import Fade from '@material-ui/core/Fade';
 import classNames from 'classnames';
+import APP_AVATAR from '../../images/logo.png'
 import APL_AVATAR from '../../images/apl_avatar.png'
 
 import './Header.scss';
@@ -32,27 +32,25 @@ class Header extends Component {
             onClick={this.handleMenuOpen}
             className={classes.menuButton}
           >
-            <MenuIcon />
+          <MenuIcon />
           </IconButton>
-              <Grid container
-                    direction="row"
-                    spacing={Number(16)}
-                    alignItems="center">
-                <Fade in={!this.props.isMenuOpen}>
-                <Grid key={"headerAvatar"} item>
-                  <Avatar
-                    alt="APL"
-                    src={APL_AVATAR}
-                    className={classNames(classes.avatar, classes.bigAvatar)}
-                  />
-                </Grid>
-                </Fade>
-                <Grid key={"headerTitle"} item>
-                  <Typography variant="title" color="inherit">
-                    Footstats
-                  </Typography>
-                </Grid>
+            <Grid container
+                  direction="row"
+                  spacing={Number(16)}
+                  alignItems="center">
+              <Grid key={"headerAvatar"} item>
+                <Avatar
+                  alt="APL"
+                  src={APP_AVATAR}
+                  className={classNames(classes.avatar, classes.bigAvatar)}
+                />
               </Grid>
+              <Grid key={"headerTitle"} item>
+                <Typography variant="title" color="inherit">
+                  Footstats
+                </Typography>
+              </Grid>
+            </Grid>
         </Toolbar>
       </AppBar>);
   }

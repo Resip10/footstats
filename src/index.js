@@ -52,7 +52,7 @@ Promise.all([
   ]).then(matches => {
     states.competitionStates.matches[states.competitionStates.info.currentSeason.currentMatchday] = DataParser.combineFixtures({
       basicData: matches[0],
-      addData: matches[1].data.matches,
+      addData: matches[0].matches[0].status === 'FINISHED' ? matches[3].data.matches : matches[1].data.matches,
       teams: states.competitionStates.teams.teams
     });
 

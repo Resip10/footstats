@@ -29,20 +29,17 @@ const styles = theme => ({
     backgroundColor: theme.palette.background.default,
     padding: theme.spacing.unit * 3,
   },
-  toolbar: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: '0 8px',
-    ...theme.mixins.toolbar
-  },
-  expansionHeader: {
-    width: '100%',
-    backgroundColor: 'transparent',
-    boxShadow: 'none',
-  },
   selected: {
     backgroundColor: theme.palette.action.selected
+  },
+  menuAvatar: {
+    width: '40px',
+    height: '40px',
+    marginLeft: '-8px'
+  },
+  falseOpened: {
+    position: 'absolute',
+    height: '100%'
   }
 });
 

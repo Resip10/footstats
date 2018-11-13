@@ -7,24 +7,24 @@ const TOKEN_FREE_PREFIX = 'https://777score.com/api/v1';
 const SEASON = 9711;
 const COMPETITION_ID = 2;
 
-class ApiService {
-  static info() {
+function ApiService() {
+  function info() {
     return _getRequest({url: `${PREFIX}/competitions/PL`, isToken: true});
   }
 
-  static teams() {
+  function teams() {
     return _getRequest({url: `${PREFIX}/competitions/PL/teams`, isToken: true});
   }
 
-  static additionTeams() {
+  function additionTeams() {
     return _getRequest({url: `${TOKEN_FREE_PREFIX}/tournaments/${COMPETITION_ID}/season/${SEASON}/teams`});
   }
 
-  static standings() {
+  function standings() {
     return _getRequest({url: `${PREFIX}/competitions/PL/standings`, isToken: true});
   }
 
-  static matches(matchday) {
+  function matches(matchday) {
     return new Promise((resolve, reject) => {
       let url = `${PREFIX}/competitions/PL/matches`;
 
@@ -42,22 +42,32 @@ class ApiService {
     });
   }
 
-  static getLastResults() {
+  function getLastResults() {
     return _getRequest({url: `${TOKEN_FREE_PREFIX}/tournaments/${COMPETITION_ID}/season/${SEASON}/results`});
   }
 
-  static getFutureMatches() {
+  function getFutureMatches() {
     return _getRequest({url: `${TOKEN_FREE_PREFIX}/tournaments/${COMPETITION_ID}/season/${SEASON}/calendar`});
   }
+
+  function _getRequest({url, isToken = false}) {
+    return axios({
+      method: 'get',
+      url: url,
+      dataType: 'json',
+      headers: isToken ? { 'X-Auth-Token': TOKEN } : {}
+    });
+  }
+
+  return Object.freeze({
+    info,
+    teams,
+    additionTeams,
+    standings,
+    matches,
+    getLastResults,
+    getFutureMatches
+  })
 }
 
-const _getRequest = ({url, isToken = false}) => {
-  return axios({
-    method: 'get',
-    url: url,
-    dataType: 'json',
-    headers: isToken ? { 'X-Auth-Token': TOKEN } : {}
-  });
-};
-
-export default ApiService;
+export default ApiService();

@@ -18,6 +18,7 @@ import Grid from "@material-ui/core/Grid/Grid";
 import Avatar from "@material-ui/core/Avatar/Avatar";
 import APL_AVATAR from "../../images/apl_avatar.png";
 import Fade from '@material-ui/core/Fade';
+import Divider from '@material-ui/core/Divider';
 import { Link } from "react-router-dom";
 import { ROUTES } from "../../redux/routeStates";
 
@@ -25,29 +26,18 @@ class Sidebar extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      expanded: false,
-      activeName: this._getActiveName()
+      opened: props.isMenuOpen,
+      activeName: this._getActiveName(),
+      endDuration: true
     };
   }
 
   componentWillReceiveProps (newProps) {
-    if (!newProps.isMenuOpen) {
-      this.setState({
-        expanded: false,
-        activeName: this._getActiveName()
-      });
-    }
-  }
-
-  onExpandPanel = (e, expanded) => {
     this.setState({
-      expanded: expanded
+      opened: newProps.isMenuOpen,
+      activeName: this._getActiveName()
     });
-  };
-
-  redirectHandler = (pathName) => () => {
-    return this.props.setRoute(pathName);
-  };
+  }
 
   _getActiveName = () => {
     return this.props.activeTeam === -1
@@ -55,78 +45,82 @@ class Sidebar extends Component {
       : this.props.teams[this.props.activeTeam].name
   };
 
-  _getSeasonDates = () => {
-    return `${this.props.competitionInfo.currentSeason.startDate.split('-')[0]} /
-    ${this.props.competitionInfo.currentSeason.endDate.split('-')[0]}`
-  };
-
   _getNextMatchweek = () => {
     let nextMatch;
     if (this.props.activeTeam === -1) {
-      nextMatch = `Next matchweek: ${this.props.competitionInfo.currentSeason.currentMatchday}`;
+      nextMatch = `Matchweek ${this.props.competitionInfo.currentSeason.currentMatchday}`;
     } else {
-      nextMatch = `Next match: this.props.teams[this.props.activeTeam].name`;
+      nextMatch = `Next match: ${this.props.teams[this.props.activeTeam].name}`;
     }
 
     return nextMatch;
   };
 
+  _mouseEnterHandler = () => {
+    if (!this.state.endDuration) {
+      return;
+    }
+
+    this.state.opened = true;
+    this.state.endDuration = false;
+    this.forceUpdate();
+  };
+
+  _mouseLeaveHandler = () => {
+    this.state.opened = this.props.isMenuOpen;
+    setTimeout(() => {
+      this.state.endDuration = true;
+      this.forceUpdate();
+    }, 200);
+    this.forceUpdate();
+  };
+
   render() {
-    const { classes, theme } = this.props;
+    const { classes, theme, isMenuOpen } = this.props;
 
     return (
       <Drawer
+        style={{minWidth: '73px'}}
         variant="permanent"
+        onMouseEnter={this._mouseEnterHandler}
+        onMouseLeave={this._mouseLeaveHandler}
+        transitionDuration={100}
         classes={{
-          paper: classNames(classes.drawerPaper, !this.props.isMenuOpen && classes.drawerPaperClose),
+          paper: classNames(
+            classes.drawerPaper,
+            !this.state.opened && classes.drawerPaperClose,
+            !isMenuOpen && !this.state.endDuration && classes.falseOpened
+          ),
         }}
-        open={this.props.isMenuOpen}
+        open={this.state.opened}
       >
-        <div className={classes.toolbar}>
-          <Fade in={this.props.isMenuOpen}>
-            <ExpansionPanel className={classes.expansionHeader} expanded={this.state.expanded} onChange={this.onExpandPanel}>
-              <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-                <Grid container
-                      wrap="nowrap"
-                      direction="row"
-                      spacing={Number(16)}
-                      alignItems="center">
-                  <Grid key={"headerAvatar"} item>
-                    <Avatar
-                      alt="APL"
-                      src={APL_AVATAR}
-                      className={classNames(classes.avatar, classes.bigAvatar)}
-                    />
-                  </Grid>
-                  <Grid item>
-                    <Typography color="textPrimary">
-                      {this.state.activeName}
-                    </Typography>
-                    <Typography color="secondary">
-                      {this._getSeasonDates()}
-                    </Typography>
-                  </Grid>
-                </Grid>
-              </ExpansionPanelSummary>
-              <ExpansionPanelDetails >
-                <Grid container
-                      wrap="nowrap"
-                      direction="column"
-                      spacing={Number(8)}
-                      alignItems="stretch">
-                  <Grid item>
-                  </Grid>
-                  <Grid item>
-                    <Typography variant="caption">
-                      {this._getNextMatchweek()}
-                    </Typography>
-                  </Grid>
-                </Grid>
-              </ExpansionPanelDetails>
-            </ExpansionPanel>
-          </Fade>
-        </div>
         <List component='nav'>
+          <ListItem>
+            <ListItemIcon>
+              <Avatar
+                alt="APL"
+                src={APL_AVATAR}
+                className={classNames(classes.avatar, classes.menuAvatar)}
+              />
+            </ListItemIcon>
+            <ListItemText>
+              <Grid container
+                    wrap="nowrap"
+                    direction="column">
+                <Grid item>
+                  <Typography color="textPrimary">
+                    {this.state.activeName}
+                  </Typography>
+                </Grid>
+                <Grid item>
+                  <Typography color="secondary">
+                    {this._getNextMatchweek()}
+                  </Typography>
+                </Grid>
+              </Grid>
+            </ListItemText>
+          </ListItem>
+          <Divider/>
           <Link
             to={'/'}
             replace={this.props.appRoute === ROUTES.HOME}

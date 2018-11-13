@@ -50,7 +50,7 @@ class Home extends Component {
     });
 
     tableContent.columnNames = {
-      position: 'Position',
+      position: 'Pos.',
       teamName: 'Club',
       playedGames: 'Games',
       goalDifference: 'Goal diff.',

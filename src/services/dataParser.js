@@ -1,5 +1,5 @@
-class DataParser {
-  static combineTeamsData({basicData, addData}) {
+function DataParser() {
+  function combineTeamsData({basicData, addData}) {
     let teams = basicData.teams.sort((teamA, teamB) => {
       if (teamA.shortName > teamB.shortName) {
         return 0;
@@ -15,19 +15,19 @@ class DataParser {
     return basicData;
   }
 
-  static combineFixtures({basicData, addData, teams}) {
+  function combineFixtures({basicData, addData, teams}) {
     let matches = basicData.matches.map(match => {
-      let homeId = this._getTeamSecondId({
+      let homeId = _getTeamSecondId({
         id: match.homeTeam.id,
         teams
       });
 
-      let awayId = this._getTeamSecondId({
+      let awayId = _getTeamSecondId({
         id: match.awayTeam.id,
         teams
       });
 
-      let additionalMatch = this._getMatch({
+      let additionalMatch = _getMatch({
         matches: addData,
         homeId,
         awayId
@@ -45,7 +45,7 @@ class DataParser {
     return basicData;
   }
 
-  static _getTeamSecondId({teams, id}) {
+  function _getTeamSecondId({teams, id}) {
     let secondId;
 
     teams.forEach(team => {
@@ -57,7 +57,7 @@ class DataParser {
     return secondId;
   };
 
-  static _getMatch({matches, homeId, awayId}) {
+  function _getMatch({matches, homeId, awayId}) {
     let matchData;
 
     matches.forEach(match => {
@@ -68,6 +68,11 @@ class DataParser {
 
     return matchData;
   };
+
+  return Object.freeze({
+    combineTeamsData,
+    combineFixtures
+  })
 }
 
-export default DataParser;
+export default DataParser();

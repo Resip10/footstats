@@ -6,13 +6,13 @@ import Header from "./Header";
 
 const styles = theme => ({
   appBar: {
-    zIndex: theme.zIndex.drawer + 1,
     transition: theme.transitions.create(['width', 'margin'], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
     }),
   },
   appBarShift: {
+    paddingLeft: 0,
     marginLeft: theme.drawerWidth,
     width: `calc(100% - ${theme.drawerWidth}px)`,
     transition: theme.transitions.create(['width', 'margin'], {
@@ -22,7 +22,6 @@ const styles = theme => ({
   },
   menuButton: {
     marginLeft: 12,
-    marginRight: 36,
   }
 });
 
