@@ -1,0 +1,7 @@
+.app-main {
+  background-image: url('../../images/background.png');
+
+  &.app-main-dark {
+    background-color: #545454 !important;
+  }
+}

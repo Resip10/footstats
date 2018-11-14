@@ -6,6 +6,8 @@ import PropTypes from "prop-types";
 import { ROUTES } from "../../redux/routeStates";
 import Home from "../../scenes/home/Home.container";
 
+import './main.scss';
+
 class Main extends Component {
   constructor(props) {
     super(props);
@@ -29,7 +31,7 @@ class Main extends Component {
     const { classes, theme } = this.props;
 
     return (
-      <main className={classes.content}>
+      <main className={classNames(classes.content, 'app-main', theme.palette.type === 'dark' && 'app-main-dark')}>
         <div className={classes.toolbar} />
         <Route exact path="/stats" render={this.renderAuthorizedView(ROUTES.STATS)} />
         <Route exact path="/" render={this.renderAuthorizedView(ROUTES.HOME)} />

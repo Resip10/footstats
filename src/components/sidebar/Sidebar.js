@@ -21,6 +21,27 @@ import Fade from '@material-ui/core/Fade';
 import Divider from '@material-ui/core/Divider';
 import { Link } from "react-router-dom";
 import { ROUTES } from "../../redux/routeStates";
+import SidebarBackground from "../pure/sidebarBackground/SidebarBackground";
+
+import './sidebar.scss';
+
+const menuList = [
+  {
+    title: 'Home',
+    route: ROUTES.HOME,
+    icon: <HomeRoundedIcon />
+  },
+  {
+    title: 'Stats',
+    route: ROUTES.STATS,
+    icon: <InsertChartIcon />
+  },
+  {
+    title: 'Clubs',
+    route: ROUTES.CLUBS,
+    icon: <BallotRoundedIcon />
+  }
+];
 
 class Sidebar extends Component {
   constructor(props) {
@@ -89,7 +110,10 @@ class Sidebar extends Component {
           paper: classNames(
             classes.drawerPaper,
             !this.state.opened && classes.drawerPaperClose,
-            !isMenuOpen && !this.state.endDuration && classes.falseOpened
+            !isMenuOpen && !this.state.endDuration && classes.falseOpened,
+            'app-sidebar',
+            theme.palette.type === 'light' && 'app-sidebar-light',
+            theme.palette.type === 'dark' && 'app-sidebar-dark',
           ),
         }}
         open={this.state.opened}
@@ -121,55 +145,31 @@ class Sidebar extends Component {
             </ListItemText>
           </ListItem>
           <Divider/>
-          <Link
-            to={'/'}
-            replace={this.props.appRoute === ROUTES.HOME}
-            style={{'textDecoration': 'none'}}
-          >
-            <ListItem
-              button
-              dense
-              className={classNames(this.props.appRoute === ROUTES.HOME && classes.selected)}
-            >
-              <ListItemIcon>
-                <HomeRoundedIcon />
-              </ListItemIcon>
-              <ListItemText primary="Home" />
-            </ListItem>
-          </Link>
-          <Link
-            to={ROUTES.STATS}
-            replace={this.props.appRoute === ROUTES.STATS}
-            style={{'textDecoration': 'none'}}
-          >
-            <ListItem
-              button
-              dense
-              className={classNames(this.props.appRoute === ROUTES.STATS && classes.selected)}
-            >
-              <ListItemIcon>
-                <InsertChartIcon />
-              </ListItemIcon>
-              <ListItemText primary='Stats' />
-            </ListItem>
-          </Link>
-          <Link
-            to={ROUTES.CLUBS}
-            replace={this.props.appRoute === ROUTES.CLUBS}
-            style={{'textDecoration': 'none'}}
-          >
-            <ListItem
-              button
-              dense
-              className={classNames(this.props.appRoute === ROUTES.CLUBS && classes.selected)}
-            >
-              <ListItemIcon>
-                <BallotRoundedIcon />
-              </ListItemIcon>
-              <ListItemText primary='Clubs' />
-            </ListItem>
-          </Link>
+          {
+            menuList.map(item => {
+             return (
+              <Link
+                to={item.route}
+                replace={this.props.appRoute === item.route}
+                style={{'textDecoration': 'none'}}
+                key={item.route}
+              >
+                <ListItem
+                  button
+                  dense
+                  className={classNames(this.props.appRoute === item.route && classes.selected)}
+                >
+                  <ListItemIcon>
+                    {item.icon}
+                  </ListItemIcon>
+                  <ListItemText primary={item.title} />
+                </ListItem>
+              </Link>
+             );
+            })
+          }
         </List>
+        <SidebarBackground imageUrl={'./pl.png'} />
       </Drawer>
     );
   }

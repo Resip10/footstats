@@ -1,0 +1,27 @@
+.app-sidebar {
+  overflow: hidden !important;
+
+  &.app-sidebar-light:after {
+    background: #fafafa;
+    opacity: .8;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    content: "";
+    display: block;
+    position: absolute;
+  }
+
+  &.app-sidebar-dark:after {
+    background: #303030;
+    opacity: .8;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    content: "";
+    display: block;
+    position: absolute;
+  }
+}
