@@ -13,17 +13,12 @@ const styles = theme => ({
   }
 });
 
-class CustomTooltip extends React.Component {
-  render () {
-    const {children, toolText, classes} = this.props;
-    return (
-      <div>
-        <Tooltip TransitionComponent={Fade} TransitionProps={{ timeout: 600 }} title={toolText} classes={{ tooltip: classes.lightTooltip }}>
-          {children}
-        </Tooltip>
-      </div>
-    );
-  }
-}
+const CustomTooltip = ({children, toolText, classes, ...props}) =>
+  <div>
+    <Tooltip TransitionComponent={Fade} TransitionProps={{ timeout: 600 }} title={toolText} classes={{ tooltip: classes.lightTooltip }}>
+      {children}
+    </Tooltip>
+  </div>
+;
 
 export default withStyles(styles, { withTheme: true })(CustomTooltip);

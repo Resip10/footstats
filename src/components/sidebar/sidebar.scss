@@ -1,5 +1,11 @@
 .app-sidebar {
   overflow: hidden !important;
+  position: relative;
+  white-space: nowrap;
+
+  &.app-sidebar-closed {
+    overflow-x: hidden;
+  }
 
   &.app-sidebar-light:after {
     background: #fafafa;
@@ -23,5 +29,16 @@
     content: "";
     display: block;
     position: absolute;
+  }
+
+  .menu-avatar {
+    width: 40px;
+    height: 40px;
+    margin-left: -8px;
+  }
+
+  .app-sidebar-open-fake {
+    position: absolute;
+    height: 100%;
   }
 }

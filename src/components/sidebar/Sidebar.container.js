@@ -5,8 +5,6 @@ import Sidebar from "./Sidebar";
 
 const styles = theme => ({
   drawerPaper: {
-    position: 'relative',
-    whiteSpace: 'nowrap',
     width: theme.drawerWidth,
     transition: theme.transitions.create('width', {
       easing: theme.transitions.easing.sharp,
@@ -14,7 +12,6 @@ const styles = theme => ({
     }),
   },
   drawerPaperClose: {
-    overflowX: 'hidden',
     transition: theme.transitions.create('width', {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
@@ -24,22 +21,8 @@ const styles = theme => ({
       width: theme.spacing.unit * 9,
     },
   },
-  content: {
-    flexGrow: 1,
-    backgroundColor: theme.palette.background.default,
-    padding: theme.spacing.unit * 3,
-  },
   selected: {
     backgroundColor: theme.palette.action.selected
-  },
-  menuAvatar: {
-    width: '40px',
-    height: '40px',
-    marginLeft: '-8px'
-  },
-  falseOpened: {
-    position: 'absolute',
-    height: '100%'
   }
 });
 

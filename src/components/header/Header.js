@@ -24,13 +24,19 @@ class Header extends Component {
 
     return (
       <AppBar title="Footstats" position="absolute"
-              className={classNames(classes.appBar, this.props.isMenuOpen && classes.appBarShift)}>
+              className={classNames(
+                classes.appBar,
+                'app-main-bar',
+                this.props.isMenuOpen && classes.appBarShift,
+                this.props.isMenuOpen && 'app-main-bar-shift'
+              )}
+      >
         <Toolbar className="major-toolbar">
           <IconButton
             color="inherit"
             aria-label="Open menu"
             onClick={this.handleMenuOpen}
-            className={classes.menuButton}
+            className={classNames('open-menu-button')}
           >
           <MenuIcon />
           </IconButton>

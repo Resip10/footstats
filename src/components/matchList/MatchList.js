@@ -48,7 +48,7 @@ class MatchList extends Component {
                 <ListItem key={match.id} dense disableGutters>
                   <Grid container direction='row'>
                     <Grid item xs className='match-list-field'>
-                      <TeamIconMini src={this._getTeam(match.homeTeam.id).crestUrl} class='flex-item'/>
+                      <TeamIconMini src={this._getTeam(match.homeTeam.id).crestUrl} classList='flex-item'/>
                       <ListItemText primary={match.homeTeam.name} className='flex-item' />
                     </Grid>
                     <Grid item xs={2} className='flex-center match-list-field'>
@@ -56,7 +56,7 @@ class MatchList extends Component {
                     </Grid>
                     <Grid item xs className='match-list-field'>
                       <ListItemText primary={match.awayTeam.name} className='flex-item' />
-                      <TeamIconMini src={this._getTeam(match.awayTeam.id).crestUrl} class='flex-item'/>
+                      <TeamIconMini src={this._getTeam(match.awayTeam.id).crestUrl} classList='flex-item'/>
                     </Grid>
                   </Grid>
                 </ListItem>

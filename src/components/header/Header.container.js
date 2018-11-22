@@ -12,16 +12,12 @@ const styles = theme => ({
     }),
   },
   appBarShift: {
-    paddingLeft: 0,
     marginLeft: theme.drawerWidth,
     width: `calc(100% - ${theme.drawerWidth}px)`,
     transition: theme.transitions.create(['width', 'margin'], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen,
     }),
-  },
-  menuButton: {
-    marginLeft: 12,
   }
 });
 

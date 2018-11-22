@@ -32,7 +32,7 @@ class Main extends Component {
 
     return (
       <main className={classNames(classes.content, 'app-main', theme.palette.type === 'dark' && 'app-main-dark')}>
-        <div className={classes.toolbar} />
+        <div className={classNames(classes.toolbar, 'app-main-toolbar')} />
         <Route exact path="/stats" render={this.renderAuthorizedView(ROUTES.STATS)} />
         <Route exact path="/" render={this.renderAuthorizedView(ROUTES.HOME)} />
         <Route exact path="/home" render={this.renderAuthorizedView(ROUTES.HOME)} />

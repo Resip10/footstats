@@ -1,8 +1,16 @@
-header {
+.app-main-bar {
   left: 0 !important;
   margin-left: 72px;
 
+  &.app-main-bar-shift {
+    padding-left: 0;
+  }
+
   .major-toolbar {
     padding: 0 !important;
+
+    .open-menu-button {
+      margin-left: 12px;
+    }
   }
 }

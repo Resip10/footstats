@@ -40,7 +40,7 @@ class TableItem extends Component {
             this.props.content.data.map(row => {
               return (
                 <TableRow
-                  className={classes.row}
+                  className={classNames(classes.row, 'table-row')}
                   key={row.position}
                   hover={true}
                 >
@@ -50,17 +50,22 @@ class TableItem extends Component {
                         <TableCell
                           key={`${row.position}_${key}`}
                         >
-                          {key === 'goalDifference'
-                            ? <Typography
-                                className={
-                                  row[key] < 0
-                                    ? 'warning-text'
-                                    : row[key] > 0
-                                    ? 'success-text' :
-                                    ''
-                                }
-                            >{row[key]}</Typography>
-                            : row[key]}
+                          {
+                            key === 'goalDifference'
+                            ? (
+                              <Typography
+                                className={classNames(
+                                  row[key] < 0 && 'warning-text',
+                                  row[key] > 0 && 'success-text',
+                                  theme.palette.type === 'dark' && 'text-dark',
+                                  theme.palette.type === 'light' && 'text-light'
+                                )}
+                              >
+                                {row[key]}
+                              </Typography>
+                              )
+                            : row[key]
+                          }
                         </TableCell>
                       );
                     })

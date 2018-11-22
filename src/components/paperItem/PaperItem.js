@@ -3,6 +3,7 @@ import classNames from 'classnames';
 import Typography from "@material-ui/core/Typography/Typography";
 import Paper from "@material-ui/core/Paper/Paper";
 import PropTypes from "prop-types";
+import './paperItem.scss';
 
 class PaperItem extends Component {
   constructor(props) {
@@ -13,8 +14,8 @@ class PaperItem extends Component {
     const { classes, theme } = this.props;
 
     return (
-      <Paper className={classes.root}>
-        <div className={classes.title}>
+      <Paper className='paper-item'>
+        <div className={classNames(classes.title, 'paper-item-title')}>
           <Typography variant="title" gutterBottom noWrap>{this.props.title}</Typography>
         </div>
         {this.props.children}

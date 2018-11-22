@@ -7,15 +7,10 @@ import Main from "./Main";
 
 const styles = theme => ({
   content: {
-    flexGrow: 1,
     backgroundColor: theme.palette.background.default,
     padding: theme.spacing.unit * 3,
   },
   toolbar: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: '0 8px',
     ...theme.mixins.toolbar
   }
 });

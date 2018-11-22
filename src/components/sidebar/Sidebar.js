@@ -10,14 +10,9 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import ExpansionPanel from '@material-ui/core/ExpansionPanel';
-import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
-import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Grid from "@material-ui/core/Grid/Grid";
 import Avatar from "@material-ui/core/Avatar/Avatar";
 import APL_AVATAR from "../../images/apl_avatar.png";
-import Fade from '@material-ui/core/Fade';
 import Divider from '@material-ui/core/Divider';
 import { Link } from "react-router-dom";
 import { ROUTES } from "../../redux/routeStates";
@@ -110,7 +105,8 @@ class Sidebar extends Component {
           paper: classNames(
             classes.drawerPaper,
             !this.state.opened && classes.drawerPaperClose,
-            !isMenuOpen && !this.state.endDuration && classes.falseOpened,
+            !this.state.opened && 'app-sidebar-closed',
+            !isMenuOpen && !this.state.endDuration && 'app-sidebar-open-fake',
             'app-sidebar',
             theme.palette.type === 'light' && 'app-sidebar-light',
             theme.palette.type === 'dark' && 'app-sidebar-dark',
@@ -124,7 +120,7 @@ class Sidebar extends Component {
               <Avatar
                 alt="APL"
                 src={APL_AVATAR}
-                className={classNames(classes.avatar, classes.menuAvatar)}
+                className={classNames(classes.avatar, 'menu-avatar')}
               />
             </ListItemIcon>
             <ListItemText>
